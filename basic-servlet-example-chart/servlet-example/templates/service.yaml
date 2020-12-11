@@ -7,9 +7,17 @@ metadata:
 spec:
   type: {{ .Values.service.type }}
   ports:
-    - port: {{ .Values.service.port }}
-      targetPort: http
+    - port: 8080
+      targetPort: 8080
       protocol: TCP
-      name: http
+      name: 8080-tcp
+    - port: 84443
+      targetPort: 8443
+      protocol: TCP
+      name: 8443-tcp
+    - port: 8778
+      targetPort: 8778
+      protocol: TCP
+      name: 8778-tcp
   selector:
     {{- include "servlet-example.selectorLabels" . | nindent 4 }}

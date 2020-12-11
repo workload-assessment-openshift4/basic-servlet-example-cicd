@@ -5,14 +5,20 @@
 replicaCount: 1
 
 image:
-  repository: nginx
+  repository: nexus-container-registry-nexus.apps.cluster-ccf2.sandbox801.opentlc.com/basic-servlet-example-s2i
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  tag: latest
 
-imagePullSecrets: []
+#imagePullSecrets: []
+imagePullSecrets: test-nexus-pull-secret
 nameOverride: ""
 fullnameOverride: ""
+
+imageCredentials:
+  registry: nexus-container-registry-nexus.apps.cluster-ccf2.sandbox801.opentlc.com
+  username: admin
+  password: admin123
 
 serviceAccount:
   # Specifies whether a service account should be created
