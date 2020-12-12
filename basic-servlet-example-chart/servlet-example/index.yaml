@@ -1,0 +1,14 @@
+apiVersion: v1
+entries:
+  servlet-example:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2020-12-11T18:45:34.052122-05:00"
+    description: A Helm chart for Kubernetes
+    digest: f5204cf5c3f3eb29c9efd169bde267fbb15dcaf04f69e550d132cbc80cce7164
+    name: servlet-example
+    type: application
+    urls:
+    - https://github.com/workload-assessment-openshift4/basic-servlet-example-cicd.git/servlet-example-0.1.0.tgz
+    version: 0.1.0
+generated: "2020-12-11T18:45:34.049525-05:00"
