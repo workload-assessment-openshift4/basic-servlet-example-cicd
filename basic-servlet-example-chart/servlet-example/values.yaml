@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: nexus-container-registry-nexus.apps.cluster-ccf2.sandbox801.opentlc.com/basic-servlet-example-s2i
+  repository: nexus-container-registry-global-pull-nexus.apps.cluster-3bcb.sandbox1869.opentlc.com/basic-servlet-example-s2i
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: latest
@@ -16,7 +16,7 @@ nameOverride: ""
 fullnameOverride: ""
 
 imageCredentials:
-  registry: nexus-container-registry-nexus.apps.cluster-ccf2.sandbox801.opentlc.com
+  registry: nexus-container-registry-global-pull-nexus.apps.cluster-3bcb.sandbox1869.opentlc.com
   username: admin
   password: admin123
 
