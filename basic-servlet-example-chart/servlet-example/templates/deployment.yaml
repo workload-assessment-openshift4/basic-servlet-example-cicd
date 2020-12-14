@@ -23,6 +23,7 @@ spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
+        #- name: {{ .Values.imageCredentials.name }}
       {{- end }}
       serviceAccountName: {{ include "servlet-example.serviceAccountName" . }}
       securityContext:
@@ -35,16 +36,24 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
-              containerPort: 80
+              containerPort: 8080
+              protocol: TCP
+            - name: 8778-tcp
+              containerPort: 8778
+              protocol: TCP
+            - name: 9779-tcp
+              containerPort: 9779
               protocol: TCP
           livenessProbe:
+            initialDelaySeconds: 5
             httpGet:
-              path: /
-              port: http
+              path: /actuator/health
+              port: 8080
           readinessProbe:
+            initialDelaySeconds: 5
             httpGet:
-              path: /
-              port: http
+              path: /actuator/health
+              port: 8080
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}

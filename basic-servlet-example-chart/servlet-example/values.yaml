@@ -5,20 +5,23 @@
 replicaCount: 1
 
 image:
-  repository: nexus-container-registry-global-pull-nexus.apps.cluster-3bcb.sandbox1869.opentlc.com/basic-servlet-example-s2i
+  #repository: nexus-container-registry-nexus.apps.cluster-3bcb.sandbox1869.opentlc.com/test/fuse7hello
+  repository: nexus-container-registry-global-pull-nexus.apps.cluster-3bcb.sandbox1869.opentlc.com/test/fuse7hello
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: latest
 
-#imagePullSecrets: []
-imagePullSecrets: test-nexus-pull-secret
-nameOverride: ""
-fullnameOverride: ""
 
-imageCredentials:
-  registry: nexus-container-registry-global-pull-nexus.apps.cluster-3bcb.sandbox1869.opentlc.com
-  username: admin
-  password: admin123
+#imagePullSecrets: 
+#  - name: "test-nexus-pull-secret"
+#nameOverride: ""
+#fullnameOverride: ""
+
+#imageCredentials:
+#  name: nexus-credentials
+#  registry: nexus-container-registry-nexus.apps.cluster-3bcb.sandbox1869.opentlc.com
+#  username: admin
+#  password: admin123
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -42,9 +45,6 @@ securityContext: {}
   # runAsNonRoot: true
   # runAsUser: 1000
 
-service:
-  type: ClusterIP
-  port: 80
 
 ingress:
   enabled: false
@@ -77,9 +77,3 @@ autoscaling:
   maxReplicas: 100
   targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
-
-nodeSelector: {}
-
-tolerations: []
-
-affinity: {}

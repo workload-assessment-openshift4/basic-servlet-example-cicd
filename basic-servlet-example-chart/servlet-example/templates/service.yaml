@@ -5,19 +5,15 @@ metadata:
   labels:
     {{- include "servlet-example.labels" . | nindent 4 }}
 spec:
-  type: {{ .Values.service.type }}
+  type: ClusterIP
   ports:
-    - port: 8080
-      targetPort: 8080
-      protocol: TCP
-      name: 8080-tcp
-    - port: 84443
-      targetPort: 8443
-      protocol: TCP
-      name: 8443-tcp
     - port: 8778
       targetPort: 8778
       protocol: TCP
       name: 8778-tcp
+    - port: 9779
+      targetPort: 9779
+      protocol: TCP
+      name: 9779-tcp
   selector:
     {{- include "servlet-example.selectorLabels" . | nindent 4 }}
