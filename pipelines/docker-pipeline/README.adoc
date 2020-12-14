@@ -8,11 +8,11 @@ This pipeline first fetches two repositories from private Gogs: the application 
 
 .. This uses a newer version of the maven Task that doesn't come with the Tekton installation
 [source, yaml]
-oc apply -f docker-build-pipeline/maven-task-2.yaml
+oc apply -f maven-task-2.yaml
 
 . Create the gogs secret
 [source, yaml]
-oc apply -f gogs/gogs-secret-basic-servlet.yaml
+oc apply -f gogs-secret-basic-servlet.yaml
 
 . Create Nexus secret
 [source, yaml]
@@ -20,15 +20,15 @@ oc apply -f nexus-secret.yaml
 
 . Create the service account that'll associate the secrets with the pipeline tasks
 [source, yaml]
-oc apply -f docker-build-pipeline/serviceaccount.yaml
+oc apply -f serviceaccount.yaml
 
 . Create the build pipeline
 [source, yaml]
-oc apply -f docker-build-pipeline/docker-pipeline.yaml
+oc apply -f docker-pipeline.yaml
 
 . Run the pipeline (make sure parameters are correct)
 [source, yaml]
-oc create -f docker-build-pipeline/docker-pipeline-run.yaml
+oc create -f docker-pipeline-run.yaml
 
 == Script
 To run all the above commands:
