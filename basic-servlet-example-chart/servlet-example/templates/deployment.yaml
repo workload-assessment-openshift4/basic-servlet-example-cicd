@@ -38,31 +38,6 @@ spec:
             - name: http
               containerPort: 8080
               protocol: TCP
-<<<<<<< HEAD
-           # - name: 8778-tcp
-           #   containerPort: 8778
-           #   protocol: TCP
-           # - name: 9779-tcp
-           #   containerPort: 9779
-           #   protocol: TCP
-          #livenessProbe:
-          #  initialDelaySeconds: 5
-          #  httpGet:
-          #    path: /actuator/health
-          #    port: 8080
-          #readinessProbe:
-          #  initialDelaySeconds: 5
-          #  httpGet:
-          #    path: /actuator/health
-          #    port: 8080
-=======
-            - name: 8778-tcp
-              containerPort: 8778
-              protocol: TCP
-            - name: 9779-tcp
-              containerPort: 9779
-              protocol: TCP
->>>>>>> 386e4666dec135b3ba59c06ec1a2e0f59e05f7a0
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
