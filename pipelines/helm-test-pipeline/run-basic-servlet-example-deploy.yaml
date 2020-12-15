@@ -1,0 +1,23 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  generateName: basic-servlet-example-deploy-
+spec:
+  params:
+    - name: TARGET_NAMESPACE
+      value: basic-servlet-example-dev
+    - name: HELM_OVERWRITE_VALUES
+      value: ""    
+  pipelineRef:
+    name: basic-servlet-example-deploy
+  serviceAccountName: deploy-bot
+  timeout: 1h0m0s
+  workspaces:
+    - name: workspace
+      volumeClaimTemplate: 
+        spec:
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 500Mi

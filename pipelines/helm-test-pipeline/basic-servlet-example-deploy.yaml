@@ -1,32 +1,35 @@
 apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
-  name: test-helm-pipeline
+  name: basic-servlet-example-deploy
 spec:
   workspaces:
   - name: workspace
   params:
   # git variables
-  - name: git-url
+  - name: GIT_URL
     type: string
     description: url of the git repo for the code of deployment
     default: "https://github.com/workload-assessment-openshift4/basic-servlet-example-cicd"
-  - name: git-revision
+  - name: GIT_REVISION
     type: string
     description: revision to be used from repo of the code for deployment
-    default: "main" 
+    default: "main"
   # helm variables
-  - name: helm_release_name
+  - name: TARGET_NAMESPACE
+    description: Namespace where to deploy the application
+  - name: HELM_RELEASE_NAME
     type: string
     description: The helm release name
-    default: "test" 
-  - name: helm_charts_dir
+    default: "basic-servlet-example"
+  - name: HELM_CHART_DIR
     type: string
     description: Directory where Chart.yaml resides
-    default: "./basic-servlet-example-chart/servlet-example"
-  - name: helm_overwrite_values
+    default: "basic-servlet-example-chart/servlet-example"
+  - name: HELM_OVERWRITE_VALUES
     type: string
     description: 'Specify the values you want to overwrite, comma separated: autoscaling.enabled=true,replicas=1'
+    default: ""
   tasks:
   - name: fetch-repository
     taskRef:
@@ -37,13 +40,13 @@ spec:
       workspace: workspace
     params:
     - name: url
-      value: $(params.git-url)
+      value: $(params.GIT_URL)
     - name: subdirectory
       value: ""
     - name: deleteExisting
       value: "true"
     - name: revision
-      value: $(params.git-revision)
+      value: $(params.GIT_REVISION)
   - name: helm-deployment
     taskRef:
       name: helm-upgrade-from-source
@@ -52,11 +55,13 @@ spec:
     - name: source
       workspace: workspace
     params:
+    - name: release_namespace
+      value: $(params.TARGET_NAMESPACE)
     - name: release_name
-      value: $(params.helm_release_name)
+      value: $(params.HELM_RELEASE_NAME)
     - name: charts_dir
-      value: $(params.helm_charts_dir)
+      value: $(params.HELM_CHART_DIR)
     - name: overwrite_values
-      value: $(params.helm_overwrite_values)
+      value: $(params.HELM_OVERWRITE_VALUES)
     runAfter:
     - fetch-repository

@@ -1,16 +1,14 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "servlet-example.fullname" . }}
+  name: {{ include "helpers.fullname" . }}
   labels:
-    {{- include "servlet-example.labels" . | nindent 4 }}
+    {{- include "helpers.labels" . | nindent 4 }}
 spec:
-{{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
-{{- end }}
   selector:
     matchLabels:
-      {{- include "servlet-example.selectorLabels" . | nindent 6 }}
+      {{- include "helpers.selectorLabels" . | nindent 6 }}
   template:
     metadata:
     {{- with .Values.podAnnotations }}
@@ -18,16 +16,18 @@ spec:
         {{- toYaml . | nindent 8 }}
     {{- end }}
       labels:
-        {{- include "servlet-example.selectorLabels" . | nindent 8 }}
+        {{- include "helpers.selectorLabels" . | nindent 8 }}
     spec:
-      {{- with .Values.imagePullSecrets }}
+      {{- if or .Values.imagePullSecrets .Values.imageCredentials }}
       imagePullSecrets:
+        {{- with .Values.imagePullSecrets }}
         {{- toYaml . | nindent 8 }}
-        #- name: {{ .Values.imageCredentials.name }}
+        {{- end }}
+        {{- with .Values.imageCredentials }}
+        - name: {{ .name }}
+        {{- end }}
       {{- end }}
-      serviceAccountName: {{ include "servlet-example.serviceAccountName" . }}
-      securityContext:
-        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      serviceAccountName: {{ include "helpers.serviceAccountName" . }}
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
