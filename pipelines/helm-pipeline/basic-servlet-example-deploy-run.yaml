@@ -6,8 +6,8 @@ spec:
   params:
     - name: TARGET_NAMESPACE
       value: basic-servlet-example-dev
-    - name: HELM_OVERWRITE_VALUES
-      value: ""    
+    - name: ENVIRONMENT
+      value: dev
   pipelineRef:
     name: basic-servlet-example-deploy
   serviceAccountName: deploy-bot

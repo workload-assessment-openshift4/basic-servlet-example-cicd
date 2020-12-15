@@ -54,7 +54,7 @@ spec:
       value: $(params.GIT_REVISION)
   - name: helm-deployment
     taskRef:
-      name: helm-upgrade-from-source
+      name: helm-upgrade-from-source-2
       kind: ClusterTask
     workspaces:
     - name: source
@@ -69,6 +69,6 @@ spec:
     - name: overwrite_values
       value: $(params.HELM_OVERWRITE_VALUES)
     - name: values_file
-      value: helm-charts/values-$(params.ENVIRONMENT).yaml
+      value: ../values-$(params.ENVIRONMENT).yaml
     runAfter:
     - fetch-repository
