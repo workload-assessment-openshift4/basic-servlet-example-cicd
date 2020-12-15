@@ -46,16 +46,16 @@ spec:
               protocol: TCP
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-      {{- with .Values.nodeSelector }}
-
-      nodeSelector:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.affinity }}
-      affinity:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.tolerations }}
-      tolerations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+          envFrom:
+            - configMapRef:
+                name: {{ include "helpers.fullname" . }}
+                optional: true
+          volumeMounts:
+          - mountPath: /etc/configmaps/{{ include "helpers.fullname" . }}
+            name: volume-cm
+      volumes:
+        - name: volume-cm
+          configMap:
+            defaultMode: 420
+            name: {{ include "helpers.fullname" . }}-mount
+            optional: true
