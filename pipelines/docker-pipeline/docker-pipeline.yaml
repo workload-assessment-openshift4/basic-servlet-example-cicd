@@ -22,6 +22,14 @@ spec:
     type: string
   - name: BUILD_CONTEXT
     type: string
+  # helm variables
+  - name: HELM_RELEASE_NAME
+    type: string
+  - name: HELM_CHARTS_DIR
+    type: string
+  - name: HELM_OVERWRITE_VALUES
+    type: string
+    description: 'Specify the values you want to overwrite, comma separated: autoscaling.enabled=true,replicas=1'
   tasks:
   - name: fetch-app-repository
     params:
@@ -92,6 +100,22 @@ spec:
     workspaces:
     - name: source
       workspace: workspace
+  - name: helm-deployment
+    params:
+    - name: release_name
+      value: $(params.HELM_RELEASE_NAME)
+    - name: charts_dir
+      value: $(params.HELM_CHARTS_DIR)
+    - name: overwrite_values
+      value: $(params.HELM_OVERWRITE_VALUES)
+    taskRef:
+      name: helm-upgrade-from-source
+      kind: ClusterTask
+    workspaces:
+    - name: source
+      workspace: workspace
+    runAfter:
+    - fetch-repository
   workspaces:
   - name: workspace
   - name: maven-settings
