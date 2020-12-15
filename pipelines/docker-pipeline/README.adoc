@@ -4,7 +4,7 @@ This pipeline first fetches two repositories from private Gogs: the application 
 
 == Steps Explained
 
-. Create maven clustertask (only needs to do once since it'll be available for the whole cluster.
+. Create maven clustertask (only needs to do once since it'll be available for the whole cluster)
 
 .. This uses a newer version of the maven Task that doesn't come with the Tekton installation
 [source, yaml]
@@ -31,8 +31,8 @@ oc apply -f docker-pipeline.yaml
 oc create -f docker-pipeline-run.yaml
 
 == Script
-To run all the above commands:
+To run all the above commands (except PipelineRun):
 [source,]
 ----
-./docker-build-pipeline/setup.sh
+./setup.sh
 ----

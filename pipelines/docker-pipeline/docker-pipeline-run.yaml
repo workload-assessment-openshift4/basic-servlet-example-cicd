@@ -13,7 +13,7 @@ spec:
     - name: GIT_REVISION
       value: master
     - name: CICD_GIT_REVISION
-      value: build-dockerfile
+      value: master
     - name: IMAGE_NAME
       value: >-
         nexus-container-registry-nexus.apps.cluster-3bcb.sandbox1869.opentlc.com/tekton-basic-servlet/basic-servlet-example:latest
