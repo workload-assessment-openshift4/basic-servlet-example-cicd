@@ -5,23 +5,14 @@
 replicaCount: 1
 
 image:
-  #repository: nexus-container-registry-nexus.apps.cluster-3bcb.sandbox1869.opentlc.com/test/fuse7hello
-  repository: nexus-container-registry-global-pull-nexus.apps.cluster-3bcb.sandbox1869.opentlc.com/test/fuse7hello
+  repository: nexus-container-registry-nexus.apps.cluster-3bcb.sandbox1869.opentlc.com/tekton-basic-servlet/basic-servlet-example
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: latest
 
 
-#imagePullSecrets: 
-#  - name: "test-nexus-pull-secret"
-#nameOverride: ""
-#fullnameOverride: ""
-
 #imageCredentials:
-#  name: nexus-credentials
-#  registry: nexus-container-registry-nexus.apps.cluster-3bcb.sandbox1869.opentlc.com
-#  username: admin
-#  password: admin123
+#  name: nexus-container-registry-nexus
 
 serviceAccount:
   # Specifies whether a service account should be created
