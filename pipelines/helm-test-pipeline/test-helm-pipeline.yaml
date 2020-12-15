@@ -1,0 +1,70 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: test-helm-pipeline
+spec:
+  workspaces:
+  - name: workspace
+  params:
+  - name: git-url
+    type: string
+    description: url of the git repo for the code of deployment
+    default: "https://github.com/workload-assessment-openshift4/basic-servlet-example-cicd"
+  - name: git-revision
+    type: string
+    description: revision to be used from repo of the code for deployment
+    default: "main" 
+  - name: helm_release_namespace
+    type: string
+    description: helm release namespace
+    default: "fo-shared-workspace" 
+  - name: helm_release_name
+    type: string
+    description: helm release name
+    default: "test" 
+  - name: helm_chart_name
+    type: string
+    description: helm chart name
+    default: "servlet-example" 
+  - name: helm_charts_dir
+    type: string
+    description: helm chart directory
+    default: "./basic-servlet-example-chart/servlet-example"
+  - name: helm_overwrite_values
+    type: string
+    description: Helm values that need to be overwritten
+  tasks:
+  - name: fetch-repository
+    taskRef:
+      name: git-clone
+      kind: ClusterTask
+    workspaces:
+    - name: output
+      workspace: workspace
+    params:
+    - name: url
+      value: $(params.git-url)
+    - name: subdirectory
+      value: ""
+    - name: deleteExisting
+      value: "true"
+    - name: revision
+      value: $(params.git-revision)
+  - name: helm-deployment
+    taskRef:
+      name: helm-upgrade-from-source
+      kind: ClusterTask
+    workspaces:
+    - name: source
+      workspace: workspace
+    params:
+    - name: release_namespace
+      value: $(params.helm_release_namespace)
+    - name: release_name
+      value: $(params.helm_release_name)
+    - name: charts_dir
+      value: $(params.helm_charts_dir)
+    - name: overwrite_values
+      value: $(params.helm_overwrite_values)
+    runAfter:
+    - fetch-repository
