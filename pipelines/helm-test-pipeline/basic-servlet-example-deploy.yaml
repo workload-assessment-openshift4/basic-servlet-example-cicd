@@ -18,6 +18,7 @@ spec:
   # helm variables
   - name: TARGET_NAMESPACE
     description: Namespace where to deploy the application
+    default: basic-servlet-example-$(params.ENVIRONMENT)
   - name: HELM_RELEASE_NAME
     type: string
     description: The helm release name
@@ -25,10 +26,14 @@ spec:
   - name: HELM_CHART_DIR
     type: string
     description: Directory where Chart.yaml resides
-    default: "basic-servlet-example-chart/servlet-example"
+    default: "helm-charts/basic-servlet-example-chart"
   - name: HELM_OVERWRITE_VALUES
     type: string
     description: 'Specify the values you want to overwrite, comma separated: autoscaling.enabled=true,replicas=1'
+    default: ""
+  - name: ENVIRONMENT
+    type: string
+    description: 'Which values file to use: dev, qa'
     default: ""
   tasks:
   - name: fetch-repository
@@ -63,5 +68,7 @@ spec:
       value: $(params.HELM_CHART_DIR)
     - name: overwrite_values
       value: $(params.HELM_OVERWRITE_VALUES)
+    - name: values_file
+      value: helm-charts/values-$(params.ENVIRONMENT).yaml
     runAfter:
     - fetch-repository
