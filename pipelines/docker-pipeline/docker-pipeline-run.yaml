@@ -23,13 +23,6 @@ spec:
       value: docker-build-pipeline/Dockerfile
     - name: BUILD_CONTEXT
       value: ServletSample/target/
-    - name: HELM_RELEASE_NAME
-      value: helm-deploy
-    - name: HELM_CHARTS_DIR
-      value: './basic-servlet-example-chart/servlet-example'
-      #TODO - Use to overwrite deployment image 
-    - name: HELM_OVERWRITE_VALUES
-      value: ""
   pipelineRef:
     name: basic-servlet-example-build
   serviceAccountName: pipeline
