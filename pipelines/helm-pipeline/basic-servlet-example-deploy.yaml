@@ -16,9 +16,6 @@ spec:
     description: revision to be used from repo of the code for deployment
     default: "main"
   # helm variables
-  - name: TARGET_NAMESPACE
-    description: Namespace where to deploy the application
-    default: basic-servlet-example-$(params.ENVIRONMENT)
   - name: HELM_RELEASE_NAME
     type: string
     description: The helm release name
@@ -35,6 +32,8 @@ spec:
     type: string
     description: 'Which values file to use: dev, qa'
     default: ""
+  - name: TARGET_NAMESPACE
+    description: Namespace where to deploy the application
   tasks:
   - name: fetch-repository
     taskRef:
