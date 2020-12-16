@@ -2,5 +2,5 @@ dependencies:
 - name: shared
   repository: file://../shared/
   version: 0.1.0
-digest: sha256:3979b49b7d6104f43e8392942d195cd618ea83141df949e0b1710a1d52cb5cc4
-generated: "2020-12-16T12:19:30.283263648-05:00"
+digest: sha256:e64cae51eb8db75ebe6bc6039d6b872d8d48c6c947c5c41ba58a1dcebc38b65f
+generated: "2020-12-16T12:43:00.474094148-05:00"

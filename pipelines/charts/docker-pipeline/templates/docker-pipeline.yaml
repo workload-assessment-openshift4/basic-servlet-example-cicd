@@ -80,10 +80,10 @@ spec:
       value: "false"
     - name: DOCKERFILE
       value: cicd/$(params.CICD_DOCKERFILE_DIR)/Dockerfile
-    # - name: CONTEXT
-    #   value: app/$(params.APP_CONTEXT_DIR)/target
-    - name: BUILD_EXTRA_ARGS
-      value: --build-arg CICD_DIR=cicd/$(params.CICD_DOCKERFILE_DIR) --build-arg ARTIFACT_DIR=app/$(params.APP_CONTEXT_DIR)/target
+    - name: CONTEXT
+      value: app/$(params.APP_CONTEXT_DIR)/target
+    #- name: BUILD_EXTRA_ARGS
+    #  value: --build-arg CICD_DIR=cicd/$(params.CICD_DOCKERFILE_DIR) --build-arg ARTIFACT_DIR=app/$(params.APP_CONTEXT_DIR)/target
     runAfter:
     - maven-build
     - fetch-cicd-repository

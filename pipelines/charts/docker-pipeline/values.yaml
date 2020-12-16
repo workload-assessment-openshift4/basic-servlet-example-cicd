@@ -1,5 +1,12 @@
 maven_task:
   enabled: false
 
-pipelinerun:
+githubpipelinerun:
+  enabled: false
+
+gogspipelinerun:
   enabled: true
+
+shared:
+  serviceaccount:
+    enabled: true

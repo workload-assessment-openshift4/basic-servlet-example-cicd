@@ -1,27 +1,27 @@
-{{- if .Values.gogspipelinerun.enabled -}}
+{{- if .Values.githubpipelinerun.enabled -}}
 apiVersion: tekton.dev/v1beta1
 kind: PipelineRun
 metadata:
-  name: basic-servlet-example-build-{{ .Release.Revision }}
+  generateName: basic-servlet-example-build-{{ .Release.Revision }}
 spec:
   params:
     - name: APP_NAME
       value: basic-servlet-example
     - name: APP_GIT_REPO
-      value: 'ssh://gogs@dtcc-gogs.gogs-test.svc:3022/szhong/basic-servlet-example.git'
-    - name: CICD_GIT_REPO
-      value: 'ssh://gogs@dtcc-gogs.gogs-test.svc:3022/szhong/openshift-pipelines.git'
+      value: https://github.com/workload-assessment-openshift4/basic-servlet-example.git
     - name: APP_GIT_REVISION
       value: master
+    - name: APP_CONTEXT_DIR
+      value: ServletSample
+    - name: CICD_GIT_REPO
+      value: https://github.com/workload-assessment-openshift4/basic-servlet-example-cicd.git
     - name: CICD_GIT_REVISION
-      value: master
+      value: main
+    - name: CICD_DOCKERFILE_DIR
+      value: container-image
     - name: IMAGE_NAME
       value: >-
         nexus-container-registry-nexus.apps.cluster-3bcb.sandbox1869.opentlc.com/tekton-basic-servlet/basic-servlet-example:latest
-    - name: APP_CONTEXT_DIR
-      value: ServletSample
-    - name: CICD_DOCKERFILE_DIR
-      value: docker-build-pipeline
   pipelineRef:
     name: basic-servlet-example-build
   serviceAccountName: pipeline
