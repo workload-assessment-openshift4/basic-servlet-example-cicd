@@ -4,8 +4,6 @@ metadata:
   generateName: basic-servlet-example-deploy-
 spec:
   params:
-    - name: TARGET_NAMESPACE
-      value: basic-servlet-example-dev
     - name: ENVIRONMENT
       value: dev
   pipelineRef:
