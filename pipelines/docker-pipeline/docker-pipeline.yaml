@@ -8,19 +8,17 @@ spec:
     type: string
   - name: APP_GIT_REPO
     type: string
-  - name: CICD_GIT_REPO
+  - name: APP_GIT_REVISION
     type: string
-  - name: GIT_REVISION
+  - name: CICD_GIT_REPO
     type: string
   - name: CICD_GIT_REVISION
     type: string
   - name: IMAGE_NAME
     type: string
-  - name: CONTEXT_DIR
+  - name: APP_CONTEXT_DIR
     type: string
-  - name: DOCKERFILE_DIR
-    type: string
-  - name: BUILD_CONTEXT
+  - name: CICD_DOCKERFILE_DIR
     type: string
   tasks:
   - name: fetch-app-repository
@@ -28,7 +26,7 @@ spec:
     - name: url
       value: $(params.APP_GIT_REPO)
     - name: revision
-      value: $(params.GIT_REVISION)
+      value: $(params.APP_GIT_REVISION)
     - name: deleteExisting
       value: "true"
     - name: subdirectory
@@ -63,9 +61,10 @@ spec:
       - fetch-app-repository
     params:
       - name: CONTEXT_DIR
-        value: app/$(params.CONTEXT_DIR)
+        value: app/$(params.APP_CONTEXT_DIR)
       - name: GOALS
         value:
+          - -B
           - clean
           - package
     workspaces:
@@ -80,9 +79,11 @@ spec:
     - name: TLSVERIFY
       value: "false"
     - name: DOCKERFILE
-      value: cicd/$(params.DOCKERFILE_DIR)
+      value: cicd/$(params.CICD_DOCKERFILE_DIR)/Dockerfile
     - name: CONTEXT
-      value: app/$(params.BUILD_CONTEXT)
+      value: app/$(params.APP_CONTEXT_DIR)/target
+    - name: BUILD_EXTRA_ARGS
+      value: --build-arg CICD_DIR=$(params.CICD_DOCKERFILE_DIR)
     runAfter:
     - maven-build
     - fetch-cicd-repository

@@ -8,21 +8,19 @@ spec:
       value: basic-servlet-example
     - name: APP_GIT_REPO
       value: https://github.com/workload-assessment-openshift4/basic-servlet-example.git
+    - name: APP_GIT_REVISION
+      value: master
+    - name: APP_CONTEXT_DIR
+      value: ServletSample
     - name: CICD_GIT_REPO
       value: https://github.com/workload-assessment-openshift4/basic-servlet-example-cicd.git
-    - name: GIT_REVISION
-      value: master
     - name: CICD_GIT_REVISION
       value: main
+    - name: CICD_DOCKERFILE_DIR
+      value: container-image
     - name: IMAGE_NAME
       value: >-
         nexus-container-registry-nexus.apps.cluster-3bcb.sandbox1869.opentlc.com/tekton-basic-servlet/basic-servlet-example:latest
-    - name: CONTEXT_DIR
-      value: ServletSample
-    - name: DOCKERFILE_DIR
-      value: container-image/Dockerfile
-    - name: BUILD_CONTEXT
-      value: ServletSample/target/
   pipelineRef:
     name: basic-servlet-example-build
   serviceAccountName: pipeline
