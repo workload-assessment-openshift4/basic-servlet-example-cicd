@@ -1,0 +1,98 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: basic-servlet-example-build
+spec:
+  params:
+  - name: APP_NAME
+    type: string
+  - name: APP_GIT_REPO
+    type: string
+  - name: APP_GIT_REVISION
+    type: string
+  - name: CICD_GIT_REPO
+    type: string
+  - name: CICD_GIT_REVISION
+    type: string
+  - name: IMAGE_NAME
+    type: string
+  - name: APP_CONTEXT_DIR
+    type: string
+  - name: CICD_DOCKERFILE_DIR
+    type: string
+  tasks:
+  - name: fetch-app-repository
+    params:
+    - name: url
+      value: $(params.APP_GIT_REPO)
+    - name: revision
+      value: $(params.APP_GIT_REVISION)
+    - name: deleteExisting
+      value: "true"
+    - name: subdirectory
+      value: app
+    taskRef:
+      kind: ClusterTask
+      name: git-clone
+    workspaces:
+    - name: output
+      workspace: workspace
+  - name: fetch-cicd-repository
+    params:
+    - name: url
+      value: $(params.CICD_GIT_REPO)
+    - name: revision
+      value: $(params.CICD_GIT_REVISION)
+    - name: deleteExisting
+      value: "true"
+    - name: subdirectory
+      value: cicd
+    taskRef:
+      kind: ClusterTask
+      name: git-clone
+    workspaces:
+    - name: output
+      workspace: workspace
+  - name: maven-build
+    taskRef:
+      name: maven-2
+      kind: ClusterTask
+    runAfter:
+      - fetch-app-repository
+    params:
+      - name: CONTEXT_DIR
+        value: app/$(params.APP_CONTEXT_DIR)
+      - name: GOALS
+        value:
+          - -B
+          - clean
+          - package
+    workspaces:
+      - name: maven-settings
+        workspace: maven-settings
+      - name: source
+        workspace: workspace
+  - name: build
+    params:
+    - name: IMAGE
+      value: $(params.IMAGE_NAME)
+    - name: TLSVERIFY
+      value: "false"
+    - name: DOCKERFILE
+      value: cicd/$(params.CICD_DOCKERFILE_DIR)/Dockerfile
+    # - name: CONTEXT
+    #   value: app/$(params.APP_CONTEXT_DIR)/target
+    - name: BUILD_EXTRA_ARGS
+      value: --build-arg CICD_DIR=cicd/$(params.CICD_DOCKERFILE_DIR) --build-arg ARTIFACT_DIR=app/$(params.APP_CONTEXT_DIR)/target
+    runAfter:
+    - maven-build
+    - fetch-cicd-repository
+    taskRef:
+      kind: ClusterTask
+      name: buildah
+    workspaces:
+    - name: source
+      workspace: workspace
+  workspaces:
+  - name: workspace
+  - name: maven-settings
