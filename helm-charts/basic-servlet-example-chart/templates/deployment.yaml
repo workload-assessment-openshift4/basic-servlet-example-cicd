@@ -51,7 +51,7 @@ spec:
                 name: {{ include "helpers.fullname" . }}
                 optional: true
           volumeMounts:
-          - mountPath: /etc/configmaps/{{ include "helpers.fullname" . }}
+          - mountPath: /etc/files/{{ include "helpers.fullname" . }}
             name: volume-cm
       volumes:
         - name: volume-cm

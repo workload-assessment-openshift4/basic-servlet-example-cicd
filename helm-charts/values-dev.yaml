@@ -1,2 +1,3 @@
 config:
   testenv: DEV-value
+  testproperty: DEV-property-value

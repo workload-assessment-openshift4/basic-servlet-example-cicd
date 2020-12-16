@@ -1,2 +1,3 @@
 config:
   testenv: QA-value
+  testproperty: QA-property-value

@@ -46,3 +46,4 @@ resources: {}
 
 config:
   testenv: DEFAULT-value
+  testproperty: DEFAULT-property-value

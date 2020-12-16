@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "helpers.fullname" . }}-mount
+data:
+  catalina.properties: |-
+    test.property={{ .Values.config.testproperty }}
