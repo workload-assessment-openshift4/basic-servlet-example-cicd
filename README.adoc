@@ -1,14 +1,12 @@
 = CI/CD - basic-servlet-example
 
-This repository contains resources needed for the CI/CD process for the https://github.com/workload-assessment-openshift4/basic-servlet-example[]basic-servlet-example Tomcat application
+This repository contains resources needed for the CI/CD process for the https://github.com/workload-assessment-openshift4/basic-servlet-example[]basic-servlet-example Tomcat application.
 
-== Setup
-TODO: Maybe add links?
-Run setup scripts for build and deploy pipelines.
+To deploy the application to Openshift you will need to run the build and deployment pipelines. Navigate to the appropriate subdirectory for instructions on how to do so.
 
 == Helm chart
 
-The Helm chart can be used deploy the application in an OpenShift namespace. It creates the required resources:
+The Helm chart will be used to deploy the application in an OpenShift namespace. It creates the required resources:
 
 * Deployment
 * Service
@@ -16,8 +14,6 @@ The Helm chart can be used deploy the application in an OpenShift namespace. It 
 * ConfigMaps
 * Secrets
 * ServiceAccount
-
-For additional documentation on the resources created by the Helm chart, you can visit https://github.com/workload-assessment-openshift4/helm-examples/tree/main/helloworld-chart[this] page.
 
 == Container image
 
@@ -27,19 +23,8 @@ The build pipeline will create the WAR file that is referenced in the Dockerfile
 
 == Pipelines
 
------remove--------
-OpenShift-Pipeline task/pipeline definitions:
-
-* Build pipelines: Build container image from source. Uses the container-image build. Source should come from a secured Git. Container image should be uploaded to secured Nexus image registry.
-* Deploy  pipeline: Deploy application in a namespace. Uses the Helm chart with env specific values. Image is pulled from secured Nexus.
-
-TODO: We probably should split up the build pipeline to "source build" and "image build" pipelines, so it can be used if the Java artifact is built another way.
-
-Guideline and script is required to install it easily in a namespace.
------remove--------
-
 There are two pipelines: build and deploy. 
 
 The build pipeline creates a WAR artifact via Maven. Buildah will then create a new image with the https://github.com/workload-assessment-openshift4/basic-servlet-example-cicd/tree/main/container-image[Dockerfile] and push it to a nexus image registry.
 
-The deploy pipeline utilizes Helm to create all the necessary Openshift resources to run the application. It will use the image that was created by the build pipeline as the image for the deployed application.
+The deploy pipeline utilizes Helm to create all the necessary resources to run the application. It will use the image that was created by the build pipeline as the image for the deployed application.
