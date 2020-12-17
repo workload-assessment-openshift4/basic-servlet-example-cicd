@@ -1,4 +1,4 @@
-{{- if .Values.githubpipelinerun.enabled -}}
+{{- if .Values.templatizedpipeline.enabled -}}
 apiVersion: tekton.dev/v1beta1
 kind: PipelineRun
 metadata:
@@ -8,17 +8,17 @@ spec:
     - name: APP_NAME
       value: basic-servlet-example
     - name: APP_GIT_REPO
-      value: https://github.com/workload-assessment-openshift4/basic-servlet-example.git
+      value: {{ .Values.APP_GIT_REPO }}
     - name: APP_GIT_REVISION
       value: master
     - name: APP_CONTEXT_DIR
       value: ServletSample
     - name: CICD_GIT_REPO
-      value: https://github.com/workload-assessment-openshift4/basic-servlet-example-cicd.git
+      value: {{ .Values.CICD_GIT_REPO }}
     - name: CICD_GIT_REVISION
-      value: main
+      value: {{ .Values.CICD_GIT_REVISION }}
     - name: CICD_DOCKERFILE_DIR
-      value: container-image
+      value: {{ .Values.CICD_DOCKERFILE_DIR }}
     - name: IMAGE_NAME
       value: >-
         nexus-container-registry-nexus.apps.cluster-3bcb.sandbox1869.opentlc.com/tekton-basic-servlet/basic-servlet-example:latest

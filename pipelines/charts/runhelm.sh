@@ -1,0 +1,1 @@
+helm install test docker-pipeline/ --set APP_GIT_REPO=ssh://gogs@dtcc-gogs.gogs-test.svc:3022/szhong/basic-servlet-example.git --set CICD_GIT_REPO=ssh://gogs@dtcc-gogs.gogs-test.svc:3022/szhong/openshift-pipelines.git --set CICD_GIT_REVISION=master --set CICD_DOCKERFILE_DIR=docker-build-pipeline

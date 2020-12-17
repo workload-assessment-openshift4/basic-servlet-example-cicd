@@ -1,12 +1,23 @@
 maven_task:
   enabled: false
 
-githubpipelinerun:
-  enabled: false
-
-gogspipelinerun:
+templatizedpipeline:
   enabled: true
+
+APP_GIT_REPO: https://github.com/workload-assessment-openshift4/basic-servlet-example.git
+
+CICD_GIT_REPO: https://github.com/workload-assessment-openshift4/basic-servlet-example-cicd.git
+
+CICD_GIT_REVISION: main
+
+CICD_DOCKERFILE_DIR: container-image
 
 shared:
   serviceaccount:
     enabled: true
+
+gogspipelinerun:
+  enabled: false
+
+githubpipelinerun:
+  enabled: false
