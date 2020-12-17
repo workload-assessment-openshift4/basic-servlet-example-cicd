@@ -6,7 +6,7 @@
 [source, yaml]
 oc apply -f helm-upgrade-from-source.yaml
 
-.Run the script in this directory:
+. Run the script in this directory:
 [source,]
 ----
 ./setup.sh
