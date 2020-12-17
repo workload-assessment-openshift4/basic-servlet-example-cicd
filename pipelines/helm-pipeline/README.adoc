@@ -2,17 +2,17 @@
 
 == Install
 
-. Create helm clustertask (only needs to do once since it'll be available for the whole cluster):
+Create helm clustertask (only needs to do once since it'll be available for the whole cluster):
 [source, yaml]
 oc apply -f helm-upgrade-from-source.yaml
 
-. Run the script in this directory:
+Run the script in this directory:
 [source,]
 ----
 ./setup.sh
 ----
 
-. To run the pipeline:
+To run the pipeline:
 [source,]
 ----
 oc create -f basic-servlet-example-deploy-run.yaml
